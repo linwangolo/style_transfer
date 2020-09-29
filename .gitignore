@@ -1,0 +1,9 @@
+.stylegan2-bk-cache/
+.stylegan2-cache/
+.stylegan2-tmp/
+__pycache__/
+dnnlib/tflib/_cudacache/
+generated/
+raw/
+results/
+training/__pycache__/
