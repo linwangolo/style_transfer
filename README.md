@@ -1,4 +1,5 @@
-### Style transfer (Cartoonify)
+# Style transfer (Cartoonify)
+Cartoonify images after detecting faces.
 
 ## Installation
 
@@ -15,6 +16,8 @@ The download url can be changed in arguments.
 
 ## How to use?
 
+### import images
+Using PIL to read images and make it as a list.
 ```python
 from PIL import Image
 img = Image.open(PATH)
@@ -29,7 +32,9 @@ detector = FaceDetect()
 boxes, probs, annotates, faces = detector.detect(img_ls, crop_size=None, mode = 'Extract_largest', save_faces = True, save_path = 'face_result')
 ```
 If images in list are not in a same size, set `crop_size`.
+
 There're 4 modes: `Detect_bool`, `Detect`, `Extract_largest`, `Extract_all`.
+
 Images of faces will be saved in `save_path = face_result/faces`.
 If you want to get the annotation image (face boxes on image), set `save_annotate=True` and it will be save in `face_result/annotations`.
 
@@ -43,6 +48,7 @@ trans.transfer(raw_dir = 'face_result/faces', result_dir = 'style_transfer/resul
 ```
 Suggest to use the face result of face detection as `raw_dir` in case that there're other faces in the original image.
 
+Result image will be save in `result_dir` named `result-toon.jpg`.
 
 ## Inference time
 The run time from face detection to style transfer is about 89.43s with 1 GPU(GTX 1080), except the very first time needs to download pre-trained model from cloud.
