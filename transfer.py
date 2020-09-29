@@ -35,7 +35,7 @@ class StyleTransfer:
         landmark_model='http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
         align_images.align(landmark_model, raw_dir, processed_dir)
         project_images.project_images(processed_dir, projected_dir, self.Gs,
-                   tmp_dir = '.stylegan2-tmp',
+                   tmp_dir = 'style_transfer/.stylegan2-tmp',
                    vgg16_pkl = 'http://d36zk2xti64re0.cloudfront.net/stylegan1/networks/metrics/vgg16_zhang_perceptual.pkl', 
                    num_steps = 500, initial_learning_rate = 0.1, initial_noise_factor = 0.05, 
                    verbose=False, video=False)
