@@ -24,7 +24,7 @@ class StyleTransfer:
         _, _, Gs_blended = pretrained_networks.load_networks(blended_url)
         return Gs, Gs_blended
 
-    def transfer(self, raw_dir='style_transfer/raw', processed_dir='style_transfer/aligned',
+    def transfer(self, raw_dir='face_result/faces', processed_dir='style_transfer/aligned',
                  projected_dir='style_transfer/projected', result_dir='style_transfer/results'):
         """
 
