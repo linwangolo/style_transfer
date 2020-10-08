@@ -49,12 +49,14 @@ class StyleTransfer:
             latent = np.expand_dims(latent,axis=0)
             synthesis_kwargs = dict(output_transform=dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=False), minibatch_size=8)
             images = self.Gs_blended.components.synthesis.run(latent, randomize_noise=False, **synthesis_kwargs)
-            # Image.fromarray(images.transpose((0,2,3,1))[0], 'RGB').save(latent_file.parent / (f"{latent_file.stem}-toon.jpg"))
-            Image.fromarray(images.transpose((0,2,3,1))[0], 'RGB').save(f"{result_dir}/result-toon.jpg")
+            Image.fromarray(images.transpose((0,2,3,1))[0], 'RGB').save((f"{result_dir}/{latent_file.stem}-toon.jpg"))
             
         # delete intermediate files
+        print('Removing aligned folders...')
         os.system(f'rm -r {processed_dir}')
+        print('Removing projected folders...')
         os.system(f'rm -r {projected_dir}')
+        print('Removing raw folders...') # removing detected faces after each round
         os.system(f'rm -r {raw_dir}')
 
 

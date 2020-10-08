@@ -1,7 +1,8 @@
 # Style transfer (Cartoonify)
 Cartoonify images with face detection for real-time face style transfer by giving frames from camera.
-This repo is based on [stylegan2](https://github.com/justinpinkney/stylegan2) but add face detection before style transfer.
-It can identify multiple faces and do multi-face style transfer.
+This repo is based on [stylegan2](https://github.com/justinpinkney/stylegan2) but add face detection by using [facenet mtcnn](https://github.com/timesler/facenet-pytorch) which is faster than dlib for real-time use.
+It can identify multiple faces and do multi-face style transfer; However, we want to do style transfer for only one person in front of the camera in this case. 
+`mode` in FaceDetect().detect(mode) can be set and default to `Extract_largest`.
 For now, it only support inference for cartoon transfer. If you want to make a different style transfer, using training code in the url above and replace `blended_url` in `StyleTransfer()` with your .pkl.
 
 ## Installation
