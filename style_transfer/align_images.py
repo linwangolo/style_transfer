@@ -20,7 +20,7 @@ def unpack_bz2(src_path):
     return dst_path
 
 
-def align(landmark_model, raw_dir, aligned_dir):
+def align(landmark_model, img, aligned_dir):
     """
     Extracts and aligns all faces from images using DLib and a function from original FFHQ dataset preparation step
     python align_images.py /raw_images /aligned_images
@@ -30,13 +30,13 @@ def align(landmark_model, raw_dir, aligned_dir):
                                                landmark_model, cache_subdir='temp'))
 
     landmarks_detector = LandmarksDetector(landmarks_model_path)
-    for img_name in [x for x in os.listdir(raw_dir) if x[0] not in '._']:
-        raw_img_path = os.path.join(raw_dir, img_name)
-        for i, face_landmarks in enumerate(landmarks_detector.get_landmarks(raw_img_path), start=1):
-            face_img_name = '%s_%02d.png' % (os.path.splitext(img_name)[0], i)
-            aligned_face_path = os.path.join(aligned_dir, face_img_name)
-            os.makedirs(aligned_dir, exist_ok=True)
-            image_align(raw_img_path, aligned_face_path, face_landmarks)
+    # for img_name in [x for x in os.listdir(raw_dir) if x[0] not in '._']:
+    #     raw_img_path = os.path.join(raw_dir, img_name)
+    for i, face_landmarks in enumerate(landmarks_detector.get_landmarks(img), start=1):
+        face_img_name = '%s_%02d.png' % ('aligned', i)
+        aligned_face_path = os.path.join(aligned_dir, face_img_name)
+        os.makedirs(aligned_dir, exist_ok=True)
+        image_align(img, aligned_face_path, face_landmarks)
 
 
 if __name__ == "__main__":

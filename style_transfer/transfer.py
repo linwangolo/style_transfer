@@ -24,8 +24,8 @@ class StyleTransfer:
         _, _, Gs_blended = pretrained_networks.load_networks(blended_url)
         return Gs, Gs_blended
 
-    def transfer(self, raw_dir='face_result/faces', processed_dir='style_transfer/aligned',
-                 projected_dir='style_transfer/projected', result_dir='style_transfer/results'):
+    def transfer(self, img, processed_dir='style_transfer/aligned',
+                 projected_dir='style_transfer/projected', result_dir='style_transfer/results', file_name='result-toon.jpg'):
         """
 
         Args:
@@ -33,7 +33,7 @@ class StyleTransfer:
 
         """
         landmark_model='http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
-        align_images.align(landmark_model, raw_dir, processed_dir)
+        align_images.align(landmark_model, img, processed_dir)
         project_images.project_images(processed_dir, projected_dir, self.Gs,
                    tmp_dir = 'style_transfer/.stylegan2-tmp',
                    vgg16_pkl = 'http://d36zk2xti64re0.cloudfront.net/stylegan1/networks/metrics/vgg16_zhang_perceptual.pkl', 
@@ -49,15 +49,15 @@ class StyleTransfer:
             latent = np.expand_dims(latent,axis=0)
             synthesis_kwargs = dict(output_transform=dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=False), minibatch_size=8)
             images = self.Gs_blended.components.synthesis.run(latent, randomize_noise=False, **synthesis_kwargs)
-            Image.fromarray(images.transpose((0,2,3,1))[0], 'RGB').save((f"{result_dir}/{latent_file.stem}-toon.jpg"))
+            Image.fromarray(images.transpose((0,2,3,1))[0], 'RGB').save(f"{result_dir}/{file_name}")
             
         # delete intermediate files
         print('Removing aligned folders...')
         os.system(f'rm -r {processed_dir}')
         print('Removing projected folders...')
         os.system(f'rm -r {projected_dir}')
-        print('Removing raw folders...') # removing detected faces after each round
-        os.system(f'rm -r {raw_dir}')
+        # print('Removing raw folders...') # removing detected faces after each round
+        # os.system(f'rm -r {raw_dir}')
 
 
 class FaceDetect:

@@ -9,8 +9,8 @@ class LandmarksDetector:
         self.detector = dlib.get_frontal_face_detector() # cnn_face_detection_model_v1 also can be used
         self.shape_predictor = dlib.shape_predictor(predictor_model_path)
 
-    def get_landmarks(self, image):
-        img = dlib.load_rgb_image(image)
+    def get_landmarks(self, img):
+        # img = dlib.load_rgb_image(image)
         dets = self.detector(img, 1)
 
         for detection in dets:
